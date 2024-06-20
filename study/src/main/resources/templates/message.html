@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<!-- java 에서 보내는 데이터를 javascript 코드로 사용할 수 있도록 함-->
+<script th:inline="javascript">
+
+// 이 구문은 HTML에서 CDATA 섹션을 표시하기 위한 주석
+// CDATA는 "Character Data"의 약자로, XML이나 XHTML 문서에서 특수 문자가 포함된 텍스트를 나타낼 때 사용
+// Thymeleaf에서는 종종 템플릿 엔진의 처리를 명확하게 하기 위해 사용
+  /*<![CDATA[*/
+
+  // 서버에서 전달된 message 값을 JavaScript 변수에 할당
+  var message = [[${message}]];
+    alert(message);
+
+  // 서버에서 전달된 searchUrl 값을 JavaScript 코드에 삽입함 이 때 /newPage라는 URL이 실제로 삽입됨
+    location.replace([[${searchUrl}]]);
+  /*]]>*/
+</script>
+<body>
+
+</body>
+</html>

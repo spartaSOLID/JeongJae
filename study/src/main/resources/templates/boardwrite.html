@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>게시물 작성폼</title>
+</head>
+<style>
+    .layout {
+        width: 500px;
+        margin: 0 auto;
+        margin-top: 40px;
+    }
+
+    .layout input {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .layout textarea {
+        width: 100%;
+        margin-top: 10px;
+        min-height: 300px;
+    }
+</style>
+<body>
+<div class="layout">
+
+    <!-- 게시판 글을 작성하기 위한 폼 -->
+    <!-- action 속성을 사용하여 폼 제출 시 /board/writepro 경로로 POST 요청을 보냄 -->
+    <!-- enctype="multipart/form-data"는 파일 업로드를 위해 반드시 필요함 -->
+    <form action="/board/writepro" method="post" enctype="multipart/form-data">
+
+        <!-- 제목 입력 필드 -->
+        <!-- name="title"은 이 입력 필드의 이름을 지정하여 폼 제출 시 서버로 전달됨 -->
+        <input name="title" type="text">
+
+        <!-- 내용 입력 필드 -->
+        <!-- name="content"는 이 텍스트 영역의 이름을 지정하여 폼 제출 시 서버로 전달됨 -->
+        <textarea name="content"></textarea>
+
+        <!-- 파일 업로드 입력 필드 -->
+        <!-- name="file"은 이 파일 입력 필드의 이름을 지정하여 폼 제출 시 서버로 전달됨 -->
+        <input type="file" name="file">
+
+        <!-- 폼을 제출하는 버튼 -->
+        <button type="submit">작성</button>
+    </form>
+</div>
+</body>
+</html>

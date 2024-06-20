@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 상세 페이지</title>
+</head>
+<body>
+<!-- 타임리프 문법 th:text 태그안에 데이터를 출력 , th:each 반복문, th:each="${number:#number(시작 번호, 끝번호)}-->
+
+
+
+
+
+<!-- 게시물 제목을 표시하는 헤딩 -->
+<h1 th:text="${board.title}">제목입니다.</h1>
+
+<!-- 게시물 내용을 표시하는 단락 -->
+<p th:text="${board.content}">내용이 들어갈 부분입니다.</p>
+
+<!-- 파일 다운로드 링크 -->
+<a th:href="@{${board.filepath}}">다운받기</a>
+
+<!-- 게시물 삭제 링크 -->
+<a th:href="@{/board/delete(id=${board.id})}">글삭제</a>
+
+<!-- 게시물 수정 링크 -->
+<a th:href="@{/board/modify/{id}(id = ${board.id})}">수정</a>
+</body>
+</html>
