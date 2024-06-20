@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 리스트 페이지</title>
+</head>
+<style>
+    .layout {
+        width: 500px;
+        margin: 0 auto;
+        margin-top: 40px;
+    }
+
+</style>
+<body>
+<div class="layout">
+    <table>
+        <thead>
+        <tr>
+            <th>글번호</th>
+            <th>제목</th>
+        </tr>
+        </thead>
+        <tbody>
+<!--        스프링부트를 이용할때 템플릿 추가에 Thymeleaf 를 추가 했었음 -->
+<!--        Thymeleaf 문법 th:속성="${  }"
+                           ${  } 안에 있는 변수는 컨트롤러에서 모델에 추가된 속성들을 참조함 -->
+
+<!--        HTML 테이블의 행을 나타내는 <tr> 태그   -->
+<!--        th:each 반복문  list라는 모델 속성의 각 항목(board)을 반복함
+            list는 Controller 에서 전달된 게시물 목록   -->
+        <tr th:each="board : ${list}">
+
+            <!-- 게시물 제목을 표시할 테이블 데이터 셀을 정의하는 <td> 태그 -->
+            <!-- 각 board 객체의 id 필드를 표시 -->
+            <!-- th:text 속성을 사용하여 board.id 값을 텍스트로 출력함 -->
+            <!-- 만약 board.id가 없으면 기본 값인 1을 표시함 -->
+            <td th:text="${board.id}">1</td>
+            <td>                                                                          <!--id가 3이라면 -->
+                <!-- board 객체의 제목을 텍스트로 출력함,  게시물 상세보기 페이지의 URL 설정 /board/view?id=3   -->
+                <a th:text="${board.title}" th:href="@{/board/view(id=${board.id})}"></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- th:block은 Thymeleaf에서 블록을 정의할 때 사용하는 태그, 실제 HTML에서는 아무런 태그로 렌더링되지 않음 -->
+    <!-- page를 반복하면서 시작페이지와 끝 페이지의 시퀀스를 생성함 --> ````````````
+    <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
+
+        <!-- 현재 페이지가 아닌 경우, 페이지 링크를 생성함 -->
+        <!-- th:if 속성을 사용하여 조건을 확인하고, 현재 페이지가 아니면 링크를 생성함 -->
+        <!-- 링크는 /board/list로 이동하며, page와 searchKeyword 파라미터를 전달함 -->
+        <a th:if="${page != nowPage}"
+           th:href="@{/board/list(page = ${page -1}, searchKeyword = ${param.searchKeyword})}" th:text="${page}"></a>
+
+        <!-- if 조건문을 사용해 현재 페이지 일때 페이지를 빨간색으로 강조함 -->
+        <strong th:if="${page == nowPage}" th:text="${page}" style="color : red"></strong>
+    </th:block>
+
+    <!-- 폼이 전송될 때 /board/list URL로 요청을 GET방식으로 보냄-->
+    <form th:action="@{/board/list}" method="get">
+        <!-- 사용자가 검색 키워드를 입력할 수 있는 텍스트 필드 -->
+        <!-- 폼이 제출될 때, name 속성은 해당 입력 필드의 값을 서버로 전송하는 데 사용 (key 값)-->
+        <!-- Spring MVC에서는 @RequestParam 어노테이션을 사용하여 폼 데이터를 받을 수 있음(key값에 해당되는 value 값) -->
+        <input type="text" name="searchKeyword">
+        <!-- 폼을 전송하는 검색 버튼 -->
+        <button type="submit">검색</button>
+    </form>
+</div>
+</body>
+</html>
